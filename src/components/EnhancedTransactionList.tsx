@@ -59,7 +59,7 @@ export const EnhancedTransactionList = ({
     <Card>
       <CardHeader>
         <CardTitle>Transaction History</CardTitle>
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Input
             placeholder="Search transactions..."
             value={searchTerm}
@@ -92,32 +92,32 @@ export const EnhancedTransactionList = ({
       <CardContent>
         <div className="space-y-3">
           {filteredTransactions.length === 0 ? (
-            <p className="text-center text-gray-500 py-8">No transactions found</p>
+            <p className="text-center text-gray-500 py-8 text-base sm:text-lg">No transactions found</p>
           ) : (
             filteredTransactions.map((transaction) => (
-              <div key={transaction.id} className="flex items-center justify-between p-4 border rounded-lg">
-                <div className="flex-1">
+              <div key={transaction.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg space-y-2 sm:space-y-0">
+                <div className="flex-1 w-full sm:w-auto">
                   <div className="flex items-center gap-2 mb-1">
-                    <Badge variant={transaction.type === 'income' ? 'default' : 'destructive'}>
+                    <Badge variant={transaction.type === 'income' ? 'default' : 'destructive'} className="text-xs sm:text-sm">
                       {transaction.type}
                     </Badge>
-                    <Badge variant="outline">{transaction.category}</Badge>
-                    <Badge variant={transaction.is_reconciled ? 'default' : 'secondary'}>
+                    <Badge variant="outline" className="text-xs sm:text-sm">{transaction.category}</Badge>
+                    <Badge variant={transaction.is_reconciled ? 'default' : 'secondary'} className="text-xs sm:text-sm">
                       {transaction.is_reconciled ? 'Matched' : 'Unmatched'}
                     </Badge>
                   </div>
-                  <p className="font-medium">{transaction.description}</p>
-                  <p className="text-sm text-gray-500">{new Date(transaction.date).toLocaleDateString()}</p>
+                  <p className="font-medium text-sm sm:text-base">{transaction.description}</p>
+                  <p className="text-xs sm:text-sm text-gray-500">{new Date(transaction.date).toLocaleDateString()}</p>
                 </div>
                 
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 flex-wrap">
                   {editingId === transaction.id ? (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
                       <Input
                         type="number"
                         value={editAmount}
                         onChange={(e) => setEditAmount(e.target.value)}
-                        className="w-24"
+                        className="w-24 text-sm sm:text-base"
                       />
                       <Button size="sm" onClick={() => handleSaveEdit(transaction.id)}>
                         <Check className="h-4 w-4" />
@@ -128,23 +128,25 @@ export const EnhancedTransactionList = ({
                     </div>
                   ) : (
                     <>
-                      <span className={`font-bold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
+                      <span className={`font-bold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'} text-sm sm:text-base`}>
                         ₹{transaction.amount.toLocaleString()}
                       </span>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
+                      <Button
+                        size="sm"
+                        variant="outline"
                         onClick={() => toggleReconciled(transaction.id, transaction.is_reconciled || false)}
+                        className="text-xs sm:text-sm"
                       >
                         {transaction.is_reconciled ? 'Mark Unmatched' : 'Mark Matched'}
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => handleEdit(transaction)}>
+                      <Button size="sm" variant="outline" onClick={() => handleEdit(transaction)} className="text-xs sm:text-sm">
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button 
-                        size="sm" 
-                        variant="destructive" 
+                      <Button
+                        size="sm"
+                        variant="destructive"
                         onClick={() => onDeleteTransaction(transaction.id)}
+                        className="text-xs sm:text-sm"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

@@ -47,15 +47,15 @@ export const AuthForm = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="text-center mb-8 absolute top-8 left-1/2 transform -translate-x-1/2">
-        <h1 className="text-5xl font-bold text-gray-900 mb-2">MAGA BUDGET PRO</h1>
-        <p className="text-xl text-gray-600">Great budgets start with great planning</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4 py-12">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">MAGA BUDGET PRO</h1>
+        <p className="text-base sm:text-lg text-gray-600">Great budgets start with great planning</p>
       </div>
       
-      <Card className="w-full max-w-md mt-24">
+      <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">
+          <CardTitle className="text-xl sm:text-2xl text-center">
             {isLogin ? "Sign In" : "Create Account"}
           </CardTitle>
         </CardHeader>
@@ -115,7 +115,7 @@ export const AuthForm = () => {
             <button
               type="button"
               onClick={() => setIsLogin(!isLogin)}
-              className="text-blue-600 hover:text-blue-800 underline"
+              className="text-blue-600 hover:text-blue-800 underline text-sm sm:text-base"
             >
               {isLogin ? "Need an account? Sign up" : "Already have an account? Sign in"}
             </button>

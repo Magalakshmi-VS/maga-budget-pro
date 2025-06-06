@@ -92,8 +92,8 @@ export const BankMatching = ({ transactions, onUpdateTransaction }: BankMatching
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
               <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
               <div className="space-y-2">
-                <p className="text-lg font-medium">Upload Bank Statement</p>
-                <p className="text-sm text-gray-500">Supports CSV, PDF, and Excel files</p>
+                <p className="text-base sm:text-lg font-medium">Upload Bank Statement</p>
+                <p className="text-xs sm:text-sm text-gray-500">Supports CSV, PDF, and Excel files</p>
                 <Input
                   type="file"
                   accept=".csv,.pdf,.xlsx,.xls"
@@ -104,16 +104,16 @@ export const BankMatching = ({ transactions, onUpdateTransaction }: BankMatching
             </div>
 
             {uploadedFile && (
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="bg-blue-50 p-4 rounded-lg text-sm sm:text-base">
                 <p className="font-medium">Selected File: {uploadedFile.name}</p>
-                <p className="text-sm text-gray-600">Size: {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                <p className="text-xs sm:text-sm text-gray-600">Size: {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
               </div>
             )}
 
             {isProcessing && (
               <div className="text-center py-4">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                <p className="mt-2 text-sm text-gray-600">Processing bank statement...</p>
+                <p className="mt-2 text-sm text-gray-600 text-xs sm:text-sm">Processing bank statement...</p>
               </div>
             )}
           </div>
@@ -129,30 +129,31 @@ export const BankMatching = ({ transactions, onUpdateTransaction }: BankMatching
             <div className="space-y-4">
               {matchResults.map((result) => (
                 <div key={result.id} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
+                    <div className="flex-1 w-full sm:w-auto">
                       <div className="flex items-center gap-2 mb-2">
                         {result.status === 'matched' ? (
                           <CheckCircle className="h-5 w-5 text-green-600" />
                         ) : (
                           <AlertTriangle className="h-5 w-5 text-orange-600" />
                         )}
-                        <Badge variant={result.status === 'matched' ? 'default' : 'destructive'}>
+                        <Badge variant={result.status === 'matched' ? 'default' : 'destructive'} className="text-xs sm:text-sm">
                           {result.status}
                         </Badge>
                       </div>
-                      <p className="font-medium">{result.description}</p>
-                      <p className="text-sm text-gray-500">{result.date}</p>
-                      <p className="text-sm">
+                      <p className="font-medium text-sm sm:text-base">{result.description}</p>
+                      <p className="text-xs sm:text-sm text-gray-500">{result.date}</p>
+                      <p className="text-xs sm:text-sm">
                         Bank: ₹{result.bankAmount.toLocaleString()}
                         {result.userAmount && ` | Your Record: ₹${result.userAmount.toLocaleString()}`}
                       </p>
                     </div>
                     
                     {result.status === 'unmatched' && (
-                      <div className="flex gap-2 flex-wrap">
-                        <Button 
+                      <div className="flex flex-col sm:flex-row gap-2 flex-wrap w-full sm:w-auto">
+                        <Button
                           size="sm"
+                          className="w-full sm:w-auto text-xs sm:text-sm"
                           onClick={() => handleMatch(result.id, transactions[0]?.id || '')}
                         >
                           Match with Transaction
