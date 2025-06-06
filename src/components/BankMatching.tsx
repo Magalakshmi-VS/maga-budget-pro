@@ -13,10 +13,19 @@ interface BankMatchingProps {
   onUpdateTransaction: (id: string, updates: Partial<Transaction>) => void;
 }
 
+interface MatchResult {
+  id: string;
+  bankAmount: number;
+  userAmount: number | null;
+  description: string;
+  date: string;
+  status: 'matched' | 'unmatched';
+}
+
 export const BankMatching = ({ transactions, onUpdateTransaction }: BankMatchingProps) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [matchResults, setMatchResults] = useState<any[]>([]);
+  const [matchResults, setMatchResults] = useState<MatchResult[]>([]);
   const { toast } = useToast();
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,7 +150,7 @@ export const BankMatching = ({ transactions, onUpdateTransaction }: BankMatching
                     </div>
                     
                     {result.status === 'unmatched' && (
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-wrap">
                         <Button 
                           size="sm"
                           onClick={() => handleMatch(result.id, transactions[0]?.id || '')}

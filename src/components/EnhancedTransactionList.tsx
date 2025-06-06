@@ -110,7 +110,7 @@ export const EnhancedTransactionList = ({
                   <p className="text-sm text-gray-500">{new Date(transaction.date).toLocaleDateString()}</p>
                 </div>
                 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   {editingId === transaction.id ? (
                     <div className="flex items-center gap-2">
                       <Input

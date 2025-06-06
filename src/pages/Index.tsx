@@ -9,11 +9,13 @@ import { AuthForm } from "@/components/AuthForm";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTransactions } from "@/hooks/useTransactions";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { user, loading, signOut } = useAuth();
-  const { 
-    transactions, 
+  const { toast } = useToast();
+  const {
+    transactions,
     loading: transactionsLoading, 
     addTransaction, 
     updateTransaction, 
@@ -43,8 +45,19 @@ const Index = () => {
           <p className="text-lg text-gray-600">Great budgets start with great planning</p>
           <div className="mt-4 flex items-center justify-center gap-4">
             <span className="text-sm text-gray-600">Welcome, {user.email}</span>
-            <Button 
-              onClick={signOut}
+            <Button
+              onClick={async () => {
+                try {
+                  await signOut();
+                } catch (error) {
+                  console.error("Logout failed:", error);
+                  toast({
+                    title: "Logout Failed",
+                    description: "Could not log out. Please try again.",
+                    variant: "destructive",
+                  });
+                }
+              }}
               variant="outline"
               size="sm"
             >
@@ -59,7 +72,7 @@ const Index = () => {
           </div>
         ) : (
           <Tabs defaultValue="dashboard" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5 bg-white shadow-sm">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-5 bg-white shadow-sm">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
               <TabsTrigger value="add">Add Transaction</TabsTrigger>
               <TabsTrigger value="transactions">View Transactions</TabsTrigger>
